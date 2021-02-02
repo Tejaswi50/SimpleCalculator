@@ -3,6 +3,7 @@ import Card from "@material-ui/core/Card";
 import { CardContent, makeStyles, Grid } from "@material-ui/core";
 import UIInput from "./UIInput";
 import UIButton from "./UIButton";
+import UIButtonGroup from "./UIButtonGroup";
 const useStyles = makeStyles({
   root: {
     width: 400,
@@ -11,9 +12,38 @@ const useStyles = makeStyles({
     marginLeft: "16rem",
     marginTop: "9rem",
   },
-
+  GroupButton: {
+    backgroundColor: "#f5f7f9",
+    color: "#000",
+    border: ".5px solid #eceff3",
+    fontWeight: "200",
+  },
   pos: {
     marginBottom: 12,
+  },
+  lightthemebackground: {
+    backgroundColor: "#fff",
+    width: 400,
+    height: 400,
+    //borderBlockColor: "black",
+    marginLeft: "16rem",
+    marginTop: "9rem",
+  },
+  darkthemebackground: {
+    width: 400,
+    height: 400,
+    // borderBlockColor: "black",
+    marginLeft: "16rem",
+    marginTop: "9rem",
+    backgroundColor: "#000",
+  },
+  lightthemebutton: {
+    backgroundColor: "#f0f0f0",
+    color: "#000",
+  },
+  darkthemebutton: {
+    backgroundColor: "#666",
+    color: "#fff",
   },
 });
 const operators = ["+", "-", "*", "/"];
@@ -32,6 +62,9 @@ const calculate = (operands, operator) => {
 };
 export const Calculator = () => {
   const classes = useStyles();
+  const [lightTheme, setLightTheme] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(false);
+  const [scientificMode, setScientificMode] = useState(false);
   const [displayvalue, setDisplayValue] = useState({
     value: "",
     placholder: 0,
@@ -64,28 +97,48 @@ export const Calculator = () => {
       const operator = stack.pop();
       const operand = stack.pop();
       const result = calculate([operand, +value], operator);
+
       setDisplayValue({
         value: result,
       });
     }
   };
+  console.log(displayvalue.value);
   return (
-    <Card className={classes.root}>
+    <Card
+      className={
+        lightTheme
+          ? `${classes.lightthemebackground}`
+          : darkTheme
+          ? `${classes.darkthemebackground}`
+          : `${classes.root}`
+      }
+    >
       <CardContent>
         <Grid container item xs={12}>
           <Grid item xs={12} style={{ heigh: "1rem" }}>
-            <UIInput
-              disabled
-              value={
-                displayvalue.value
-                  ? displayvalue.value
-                  : displayvalue.placholder
-              }
-            />
+            <div style={{ backgroundColor: "white" }}>
+              <UIInput
+                disabled
+                value={
+                  displayvalue.value
+                    ? displayvalue.value
+                    : displayvalue.placholder
+                }
+              />
+            </div>
+
             <Grid item xs={12} container style={{ marginTop: "1rem" }}>
               <Grid item xs={3}>
                 <UIButton
                   color="default"
+                  className={
+                    lightTheme
+                      ? `${classes.lightthemebutton}`
+                      : darkTheme
+                      ? `${classes.darkthemebutton}`
+                      : ``
+                  }
                   //value="1"
                   onClick={(event) => {
                     setDisplayValue({
@@ -104,6 +157,13 @@ export const Calculator = () => {
                       value: displayvalue.value + 2,
                     })
                   }
+                  className={
+                    lightTheme
+                      ? `${classes.lightthemebutton}`
+                      : darkTheme
+                      ? `${classes.darkthemebutton}`
+                      : ``
+                  }
                 >
                   2
                 </UIButton>
@@ -115,6 +175,13 @@ export const Calculator = () => {
                     setDisplayValue({
                       value: displayvalue.value + 3,
                     })
+                  }
+                  className={
+                    lightTheme
+                      ? `${classes.lightthemebutton}`
+                      : darkTheme
+                      ? `${classes.darkthemebutton}`
+                      : ``
                   }
                 >
                   3
@@ -128,6 +195,13 @@ export const Calculator = () => {
                       ...displayvalue,
                       value: displayvalue.value + "+",
                     })
+                  }
+                  className={
+                    lightTheme
+                      ? `${classes.lightthemebutton}`
+                      : darkTheme
+                      ? `${classes.darkthemebutton}`
+                      : ``
                   }
                 >
                   Add(+)
@@ -143,11 +217,29 @@ export const Calculator = () => {
                     })
                   }
                 >
-                  <UIButton color="default">4</UIButton>
+                  <UIButton
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
+                    color="default"
+                  >
+                    4
+                  </UIButton>
                 </Grid>
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + 5,
@@ -160,6 +252,13 @@ export const Calculator = () => {
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + 6,
@@ -172,6 +271,13 @@ export const Calculator = () => {
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + "-",
@@ -186,6 +292,13 @@ export const Calculator = () => {
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + 7,
@@ -198,6 +311,13 @@ export const Calculator = () => {
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + 8,
@@ -210,6 +330,13 @@ export const Calculator = () => {
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + 9,
@@ -222,6 +349,13 @@ export const Calculator = () => {
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + "*",
@@ -236,7 +370,21 @@ export const Calculator = () => {
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
-                    onClick={() => setDisplayValue({ value: 0 })}
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
+                    onClick={() => setDisplayValue({ value: "0" })}
                   >
                     Clear
                   </UIButton>
@@ -244,6 +392,13 @@ export const Calculator = () => {
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + 0,
@@ -254,13 +409,30 @@ export const Calculator = () => {
                   </UIButton>
                 </Grid>
                 <Grid item xs={3}>
-                  <UIButton color="default" onClick={showResultHandler}>
+                  <UIButton
+                    color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
+                    onClick={showResultHandler}
+                  >
                     =
                   </UIButton>
                 </Grid>
                 <Grid item xs={3}>
                   <UIButton
                     color="default"
+                    className={
+                      lightTheme
+                        ? `${classes.lightthemebutton}`
+                        : darkTheme
+                        ? `${classes.darkthemebutton}`
+                        : ``
+                    }
                     onClick={(event) =>
                       setDisplayValue({
                         value: displayvalue.value + "/",
@@ -272,6 +444,86 @@ export const Calculator = () => {
                 </Grid>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={4}>
+            <UIButton
+              color="default"
+              style={{ fontSize: "11px", marginTop: "1rem" }}
+              onClick={() => setScientificMode(true)}
+            >
+              Scientific Mode
+            </UIButton>
+          </Grid>
+          <Grid item xs={8} style={{ marginTop: "1rem" }}>
+            <UIButtonGroup variant="contained" size="small">
+              <UIButtonGroup.Btn
+                className={classes.GroupButton}
+                onClick={() => {
+                  setDarkTheme(false);
+                  setLightTheme(true);
+                }}
+              >
+                <span>Light Theme</span>
+              </UIButtonGroup.Btn>
+              <UIButtonGroup.Btn
+                className={classes.GroupButton}
+                onClick={() => {
+                  setLightTheme(false);
+                  setDarkTheme(true);
+                }}
+              >
+                <span>Dark Theme</span>
+              </UIButtonGroup.Btn>
+            </UIButtonGroup>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{ marginTop: "1rem", marginLeft: "-3.5rem" }}
+          >
+            {scientificMode && (
+              <UIButtonGroup variant="contained" size="small">
+                <UIButtonGroup.Btn
+                  className={classes.GroupButton}
+                  onClick={() =>
+                    setDisplayValue({
+                      value:
+                        displayvalue.value > 0
+                          ? displayvalue.value * -1
+                          : displayvalue.value < 0
+                          ? displayvalue.value * -1
+                          : displayvalue.value,
+                    })
+                  }
+                >
+                  Sign
+                </UIButtonGroup.Btn>
+                <UIButtonGroup.Btn
+                  onClick={() =>
+                    setDisplayValue({
+                      value: displayvalue.value
+                        ? displayvalue.value * displayvalue.value
+                        : displayvalue.value,
+                    })
+                  }
+                  className={classes.GroupButton}
+                >
+                  Square
+                </UIButtonGroup.Btn>
+                <UIButtonGroup.Btn
+                  onClick={() =>
+                    setDisplayValue({
+                      value: displayvalue.value
+                        ? Math.sqrt(displayvalue.value)
+                        : displayvalue.value,
+                    })
+                  }
+                  className={classes.GroupButton}
+                >
+                  Square Root
+                </UIButtonGroup.Btn>
+              </UIButtonGroup>
+            )}
           </Grid>
         </Grid>
       </CardContent>
